@@ -25,3 +25,23 @@ export function handlingHearders (headers: any, data: any): any {
   }
   return headers
 }
+
+// 响应头处理为对象形式
+export function parseHeaders(headers: string): any {
+  let parsed = Object.create(null)
+  if(!headers) {
+    return parsed
+  }
+  // 根据换行符和空格切割
+  headers.split('\r\n').forEach(line => {
+    let [key, val] = line.split(':')
+    // 去空格 规范小写
+    key = key.trim().toLowerCase()
+    if(!key) {
+      // 进行下次循环
+      return
+    }
+    parsed[key] = val
+  })
+  return parsed
+}
