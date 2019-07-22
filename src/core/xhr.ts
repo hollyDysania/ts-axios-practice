@@ -1,32 +1,32 @@
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
-import { parseHeaders } from './helpers/headers'
-import { createdError } from './helpers/error'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
+import { parseHeaders } from '../helpers/headers'
+import { createdError } from '../helpers/error'
 
-export default function xhr(config: AxiosRequestConfig): AxiosPromise{
+export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     // 利用默认值和结构取值
     const { data = null, url, method = 'get', headers = {}, responseType, timeout } = config
     // 创建XMLHttpRequest实例对象
     const request = new XMLHttpRequest()
     // 方式 url 同步异步(true为异步)
-    request.open(method.toUpperCase(), url, true)
+    request.open(method.toUpperCase(), url!, true)
     // type
     if (responseType) {
       request.responseType = responseType
     }
     // 超时时间 ms
-    if(timeout) {
+    if (timeout) {
       request.timeout = timeout
     }
     // 监听状态
     request.onreadystatechange = function handleLoad() {
-      let {readyState, status} = request
+      let { readyState, status } = request
       // 响应未完成直接return
-      if(readyState !== 4) {
+      if (readyState !== 4) {
         return
       }
       // 网络错误或超时 status为0
-      if(status === 0) {
+      if (status === 0) {
         return
       }
       // 拿到响应头 响应头字符串转换为对象
@@ -67,11 +67,17 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise{
 
     // 针对不同status做处理
     function handleResponse(response: AxiosResponse): void {
-      if(response.status >= 200 && response.status < 300) {
+      if (response.status >= 200 && response.status < 300) {
         resolve(response)
-      }else {
+      } else {
         reject(
-          createdError(`Request failed with status code ${response.status}`, config, null, request, response)
+          createdError(
+            `Request failed with status code ${response.status}`,
+            config,
+            null,
+            request,
+            response
+          )
         )
       }
     }

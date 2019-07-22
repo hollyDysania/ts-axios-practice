@@ -14,3 +14,10 @@ export function isObject(val: any): val is object {
 export function isplainObject(val: any): val is object {
   return AnyToString.call(val) === '[object Object]'
 }
+
+// 混合对象
+export function extend<T, U>(to: T, from: U): T & U {
+  for (const key in from) {
+    ;(to as T & U)[key] = from[key] as any
+  }
+}
