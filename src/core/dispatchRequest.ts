@@ -4,7 +4,7 @@ import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
 import xhr from './xhr'
 import { handlingURL } from '../helpers/url'
 import { transformRequest, transformResponse } from '../helpers/data'
-import { handlingHearders } from '../helpers/headers'
+import { handlingHearders, flattenHeaders } from '../helpers/headers'
 
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
   handlingConfig(config)
@@ -22,6 +22,8 @@ function handlingConfig(config: AxiosRequestConfig): void {
   config.headers = transformHeaders(config)
   // data
   config.data = transformRequestData(config)
+  // 请求头进一步处理
+  config.headers = flattenHeaders(config.headers, config.method!)
 }
 
 // URL处理
