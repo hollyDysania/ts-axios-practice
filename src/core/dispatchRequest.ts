@@ -44,6 +44,5 @@ function transformHeaders(config: AxiosRequestConfig): any {
 // data数据处理
 function transformResponseData(res: AxiosResponse): AxiosResponse {
   res.data = transformResponse(res.data)
-  console.log(res.data, 1122)
   return res
 }
