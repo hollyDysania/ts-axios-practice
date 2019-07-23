@@ -11,7 +11,7 @@ export function isObject(val: any): val is object {
 }
 
 // 判断普通对象 (为了排除formData, Blod)
-export function isplainObject(val: any): val is object {
+export function isPlainObject(val: any): val is object {
   return AnyToString.call(val) === '[object Object]'
 }
 
@@ -31,8 +31,8 @@ export function deepMerge(...objs: any[]): any {
     if (obj) {
       Object.keys(obj).forEach(key => {
         const val = obj[key]
-        if (isplainObject(val)) {
-          if (isplainObject(result[key])) {
+        if (isPlainObject(val)) {
+          if (isPlainObject(result[key])) {
             result[key] = deepMerge(result[key], val)
           } else {
             result[key] = deepMerge(val)

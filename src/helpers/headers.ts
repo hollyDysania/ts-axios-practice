@@ -1,4 +1,4 @@
-import { isplainObject, deepMerge } from './util'
+import { isPlainObject, deepMerge } from './util'
 
 // 规范化
 function normalizeHeaderName(headers: any, normalizeName: string): void {
@@ -18,7 +18,7 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
 export function handlingHearders(headers: any, data: any): any {
   // 规范化首字母大写
   normalizeHeaderName(headers, 'Content-Type')
-  if (isplainObject(data)) {
+  if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
       headers['Content-Type'] = 'application/json;charset=utf-8'
     }
